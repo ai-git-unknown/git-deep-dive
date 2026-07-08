@@ -503,19 +503,25 @@ git branch recovered &lt;sha&gt;</code></pre>
   Built as a single self-contained HTML file — no dependencies, no network. Open <code>index.html</code> in any browser.
 </footer>
 
+<button class="back-to-top" id="toTop" aria-label="Back to top" title="Back to top">↑</button>
 <script>
   const bar = document.getElementById('progress');
   const toTop = document.getElementById('toTop');
   const tocLinks = [...document.querySelectorAll('nav.toc a')];
   const sections = tocLinks.map(a => document.querySelector(a.getAttribute('href')));
 
+  function scrollY() {
+    return window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+  }
+
   function onScroll() {
-    const h = document.documentElement;
-    const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
+    const y = scrollY();
+    const doc = document.documentElement;
+    const scrolled = y / (doc.scrollHeight - doc.clientHeight);
     bar.style.width = (scrolled * 100) + '%';
 
     // reveal back-to-top once the reader has scrolled down
-    toTop.classList.toggle('show', h.scrollTop > 400);
+    toTop.classList.toggle('show', y > 400);
 
     // active TOC link
     let active = sections.length - 1;
@@ -528,6 +534,5 @@ git branch recovered &lt;sha&gt;</code></pre>
   toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   onScroll();
 </script>
-<button class="back-to-top" id="toTop" aria-label="Back to top" title="Back to top">↑</button>
 </body>
 </html>
