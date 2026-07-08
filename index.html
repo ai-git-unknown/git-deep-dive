@@ -511,7 +511,13 @@ git branch recovered &lt;sha&gt;</code></pre>
   const sections = tocLinks.map(a => document.querySelector(a.getAttribute('href')));
 
   function scrollY() {
-    return window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    const de = document.documentElement.scrollTop;
+    const bd = document.body.scrollTop;
+    const wy = window.pageYOffset;
+    return (typeof de === 'number' && de > 0) ? de
+         : (typeof bd === 'number' && bd > 0) ? bd
+         : (typeof wy === 'number' && wy > 0) ? wy
+         : 0;
   }
 
   function onScroll() {
